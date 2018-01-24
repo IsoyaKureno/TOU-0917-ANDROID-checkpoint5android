@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         listDestAirport.add("BOS");
         listDestAirport.add("LAX");
         listDestAirport.add("MIA");
-        listDestAirport.add("NYC");
         ArrayAdapter<String> destAirportDataAdapter = new ArrayAdapter<>
                 (MainActivity.this, android.R.layout.simple_spinner_item, listDestAirport);
         destAirportDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 String departDate = editTextDepartDate.getText().toString();
                 String returnDate = editTextReturnDate.getText().toString();
                 if (destAirport.equals("")||departDate.equals("")||returnDate.equals("")) {
-                    Toast.makeText(MainActivity.this,"Please",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.please,Toast.LENGTH_SHORT).show();
                 } else {
                     Intent toResultActivity = new Intent(MainActivity.this,ResultActivity.class);
                     toResultActivity.putExtra("destAirport",destAirport);

@@ -5,4 +5,6 @@
     <string name="departure_date">Date de Départ</string>
     <string name="return_date">Date de Retour</string>
     <string name="find_a_fly">Trouver un vol</string>
+    <string name="convert">Convertir</string>
+    <string name="please">Veuillez compléter les champs</string>
 </resources>
