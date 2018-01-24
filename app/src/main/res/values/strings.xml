@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WCSTravel</string>
+    <string name="destination_airport">Destination Airport</string>
+    <string name="departure_date">Departure Date</string>
+    <string name="return_date">Return Date</string>
+    <string name="find_a_fly">Find a fly</string>
 </resources>
