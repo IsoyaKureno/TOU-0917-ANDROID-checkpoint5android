@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -18,14 +20,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "IsoyaKureno";
 
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference mMyStudentsRef = mDatabase.getReference("students/IsoyaKureno");
+    DatabaseReference mMyStudentsRef = mDatabase.getReference("checkpoint5/students/IsoyaKureno/hasContent");
     final Calendar mMyCalendar = Calendar.getInstance();
 
     @Override
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final EditText editTextDestAirport = findViewById(R.id.editTextDestAirport);
+        final Spinner spinnerDestAirport = findViewById(R.id.spinnerDestAirport);
         final EditText editTextDepartDate = findViewById(R.id.editTextDepartDate);
         final EditText editTextReturnDate = findViewById(R.id.editTextReturnDate);
         final Button buttonFindAFly = findViewById(R.id.buttonFindAFly);
@@ -47,6 +51,17 @@ public class MainActivity extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", databaseError.toException());
             }
         });
+
+        final List<String> listDestAirport = new ArrayList<>();
+        listDestAirport.add("BOS");
+        listDestAirport.add("LAX");
+        listDestAirport.add("MIA");
+        listDestAirport.add("NYC");
+        ArrayAdapter<String> destAirportDataAdapter = new ArrayAdapter<>
+                (MainActivity.this, android.R.layout.simple_spinner_item, listDestAirport);
+        destAirportDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDestAirport.setAdapter(destAirportDataAdapter);
+
 
         final DatePickerDialog.OnDateSetListener dateDeparture = new DatePickerDialog.OnDateSetListener() {
             @Override public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -88,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
         buttonFindAFly.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                String destAirport = editTextDestAirport.getText().toString();
+                String destAirport = spinnerDestAirport.getSelectedItem().toString();
                 String departDate = editTextDepartDate.getText().toString();
                 String returnDate = editTextReturnDate.getText().toString();
                 if (destAirport.equals("")||departDate.equals("")||returnDate.equals("")) {
@@ -105,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void dateActu(EditText editText){
-        String myFormat = "MM/dd/yy";
+        String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         editText.setText(sdf.format(mMyCalendar.getTime()));
     }

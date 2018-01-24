@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 public class ResultListAdapter extends ArrayAdapter<TravelModel>{
-    public ResultListAdapter(Context context, List<TravelModel> travels) {
+    ResultListAdapter(Context context, List<TravelModel> travels) {
         super(context, 0, travels);
     }
 
